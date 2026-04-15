@@ -1,1 +1,742 @@
-<h1>Hello DevOps - It's a beautiful day!</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stanislav — Portfolio DevOps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #16181e;
+      --bg2: #1e2028;
+      --text: #e8eaf0;
+      --text2: #8b90a0;
+      --accent: #60a5fa;
+      --accent2: #93c5fd;
+      --line: #2a2d38;
+      --tag-bg: #1e2130;
+      --card: #1c1f2b;
+      --learned-bg: #1a2a3a;
+      --learned-text: #7dd3fc;
+      --learning-bg: #2a1f10;
+      --learning-text: #fbbf24;
+      --todo-bg: #1e2028;
+      --todo-text: #8b90a0;
+    }
+    :root.light {
+      --bg: #f0f4f8;
+      --bg2: #e4eaf2;
+      --text: #1a1f2e;
+      --text2: #5a6275;
+      --accent: #2563eb;
+      --accent2: #3b82f6;
+      --line: #cdd5e0;
+      --tag-bg: #dce6f0;
+      --card: #ffffff;
+      --learned-bg: #dbeafe;
+      --learned-text: #1d4ed8;
+      --learning-bg: #fef3c7;
+      --learning-text: #92400e;
+      --todo-bg: #e4eaf2;
+      --todo-text: #5a6275;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.7;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* TOGGLE */
+    .theme-toggle {
+      background: var(--tag-bg);
+      border: 1px solid var(--line);
+      color: var(--text2);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 60px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text2);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 60px 80px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .hero-content { max-width: 700px; }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text2);
+      max-width: 520px;
+      margin-bottom: 40px;
+      font-weight: 300;
+      opacity: 0; animation: fadeUp 0.6s 0.3s forwards;
+    }
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      opacity: 0; animation: fadeUp 0.6s 0.4s forwards;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      background: var(--tag-bg);
+      color: var(--text2);
+      padding: 6px 14px;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+    }
+    .tag.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* SECTIONS */
+    section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 60px;
+      border-top: 1px solid var(--line);
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 48px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: var(--line);
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--text2);
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .about-stats {
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .stat {
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text2);
+      font-weight: 300;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent2);
+      transform: translateY(-2px);
+    }
+    .skill-category {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .skill-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .skill-items {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .skill-item {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      background: var(--tag-bg);
+      color: var(--text2);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+    .skill-item.learned { background: var(--learned-bg); color: var(--learned-text); }
+    .skill-item.learning { background: var(--learning-bg); color: var(--learning-text); }
+    .skill-item.todo { background: var(--todo-bg); color: var(--todo-text); border: 1px dashed var(--line); }
+
+    /* LEGEND */
+    .legend {
+      display: flex; gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; color: var(--text2);
+    }
+    .legend-dot {
+      width: 10px; height: 10px; border-radius: 2px;
+    }
+    .dot-learned { background: var(--learned-bg); border: 1px solid var(--learned-text); }
+    .dot-learning { background: var(--learning-bg); border: 1px solid var(--learning-text); }
+    .dot-todo { background: var(--todo-bg); border: 1px dashed var(--line); }
+
+    /* PROJECTS */
+    .projects-list { display: flex; flex-direction: column; gap: 20px; }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+      transition: border-color 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent2); }
+    .project-status {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .status-done { background: var(--learned-bg); color: var(--learned-text); }
+    .status-progress { background: var(--learning-bg); color: var(--learning-text); }
+    .status-planned { background: var(--tag-bg); color: var(--text2); }
+    .project-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--text2);
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+    .project-tech {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .project-tech span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      background: var(--tag-bg);
+      color: var(--text2);
+      padding: 3px 10px;
+      border-radius: 3px;
+    }
+    .project-link {
+      font-size: 0.82rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 14px;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+    .project-link:hover { opacity: 0.7; }
+
+    /* HOMELAB */
+    .homelab-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .homelab-item {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+    .homelab-item .name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .homelab-item .role {
+      font-size: 0.75rem;
+      color: var(--text2);
+    }
+
+    /* ABOUT ME perso */
+    .perso-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .perso-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+    }
+    .perso-card h3 {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .perso-card p {
+      font-size: 0.88rem;
+      color: var(--text2);
+      font-weight: 300;
+    }
+
+    /* FOOTER */
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 60px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p { font-size: 0.82rem; color: var(--text2); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      section { padding: 60px 24px; }
+      .about-grid, .perso-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .homelab-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: column; gap: 16px; padding: 32px 24px; }
+      .project-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Stanislav K.</a>
+    <ul class="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="#projects">Projets</a></li>
+      <li><a href="#homelab">Homelab</a></li>
+      <li><a href="https://github.com/kingstom-glitch" target="_blank">GitHub</a></li>
+    </ul>
+    <button class="theme-toggle" onclick="toggleTheme()" id="toggleBtn">☀ clair</button>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">// Chef de projet → DevOps</p>
+      <h1>Curieux de nature,<br><em>passionné</em> de systèmes.</h1>
+      <p class="hero-desc">
+        Assistant chef de projet industriel en reconversion vers le DevOps.
+        Autodidacte depuis l'enfance, je construis, j'expérimente, et j'apprends
+        en faisant — homelab, pipelines CI/CD, conteneurs.
+      </p>
+      <div class="hero-tags">
+        <span class="tag active">DevOps</span>
+        <span class="tag active">Docker</span>
+        <span class="tag active">Linux</span>
+        <span class="tag active">GitHub Actions</span>
+        <span class="tag">Kubernetes</span>
+        <span class="tag">Terraform</span>
+        <span class="tag">Lyon, France</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">01 — À propos</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">Un parcours atypique,<br>une passion constante.</h2>
+        <p>
+          Depuis l'enfance, j'ai toujours été attiré par les systèmes — comment ils fonctionnent,
+          comment les assembler, comment les faire tenir ensemble. Reinstallation d'OS, administration
+          de sites web, assemblage de PC : tout ça bien avant d'en faire un métier.
+        </p>
+        <p>
+          Aujourd'hui <strong>assistant chef de projet en industrie</strong>, je mets en place une
+          transition vers le DevOps — un domaine qui combine ma rigueur de gestion de projet et
+          ma passion pour les systèmes et l'automatisation.
+        </p>
+        <p>
+          Je prépare une certification <strong>RNCP DevOps</strong> tout en pratiquant au quotidien
+          sur mon homelab Proxmox — parce qu'on apprend mieux en faisant qu'en lisant.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Années d'auto-formation en IT</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">Bac+5</div>
+          <div class="stat-label">Master gestion de projet</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">∞</div>
+          <div class="stat-label">Curiosité — en cours de mise à jour</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">02 — Compétences</p>
+    <h2 class="section-title">Ce que je sais,<br>ce que j'apprends.</h2>
+
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot dot-learned"></div>
+        <span>Maîtrisé</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot dot-learning"></div>
+        <span>En cours d'apprentissage</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot dot-todo"></div>
+        <span>Objectif futur</span>
+      </div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card">
+        <p class="skill-category">Conteneurisation</p>
+        <h3>Docker & Compose</h3>
+        <div class="skill-items">
+          <span class="skill-item learned">Docker</span>
+          <span class="skill-item learned">Docker Compose</span>
+          <span class="skill-item learned">Dockerfile</span>
+          <span class="skill-item learning">Docker Hub</span>
+          <span class="skill-item todo">Docker Swarm</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <p class="skill-category">CI/CD</p>
+        <h3>Automatisation</h3>
+        <div class="skill-items">
+          <span class="skill-item learned">Git</span>
+          <span class="skill-item learned">GitHub</span>
+          <span class="skill-item learned">GitHub Actions</span>
+          <span class="skill-item learning">GitHub Pages</span>
+          <span class="skill-item todo">GitLab CI</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <p class="skill-category">Infrastructure</p>
+        <h3>Systèmes & Réseau</h3>
+        <div class="skill-items">
+          <span class="skill-item learned">Linux (Debian)</span>
+          <span class="skill-item learned">Proxmox VE</span>
+          <span class="skill-item learned">LXC</span>
+          <span class="skill-item learned">SSH</span>
+          <span class="skill-item learning">Nginx</span>
+          <span class="skill-item todo">Terraform</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <p class="skill-category">Sécurité</p>
+        <h3>Réseau & Monitoring</h3>
+        <div class="skill-items">
+          <span class="skill-item learned">Pi-hole</span>
+          <span class="skill-item learned">WireGuard</span>
+          <span class="skill-item learned">CrowdSec</span>
+          <span class="skill-item learning">TryHackMe</span>
+          <span class="skill-item todo">Prometheus</span>
+          <span class="skill-item todo">Grafana</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <p class="skill-category">Développement</p>
+        <h3>Scripting & Code</h3>
+        <div class="skill-items">
+          <span class="skill-item learned">Bash</span>
+          <span class="skill-item learned">YAML</span>
+          <span class="skill-item learning">Python (bases)</span>
+          <span class="skill-item learning">HTML/CSS</span>
+          <span class="skill-item todo">Ansible</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <p class="skill-category">Gestion de projet</p>
+        <h3>Méthodologies</h3>
+        <div class="skill-items">
+          <span class="skill-item learned">Gestion de projet</span>
+          <span class="skill-item learned">KizeoForms</span>
+          <span class="skill-item learning">PowerApps</span>
+          <span class="skill-item learned">Documentation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">03 — Projets</p>
+    <h2 class="section-title">Ce que j'ai construit.</h2>
+
+    <div class="projects-list">
+
+      <div class="project-card">
+        <div>
+          <p class="project-title">Portfolio DevOps — ce site</p>
+          <p class="project-desc">Portfolio personnel déployé via GitHub Pages avec pipeline CI/CD automatique. Mis à jour en continu au fil de mon apprentissage.</p>
+          <div class="project-tech">
+            <span>HTML/CSS</span><span>GitHub Actions</span><span>GitHub Pages</span><span>CI/CD</span>
+          </div>
+          <a href="https://github.com/kingstom-glitch" class="project-link" target="_blank">Voir sur GitHub →</a>
+        </div>
+        <span class="project-status status-done">Terminé</span>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <p class="project-title">App Flask Dockerisée — compteur de visites</p>
+          <p class="project-desc">Application multi-services avec Flask (Python), Redis et Nginx orchestrés via Docker Compose. Premier projet DevOps complet avec reverse proxy et persistance de données.</p>
+          <div class="project-tech">
+            <span>Docker</span><span>Docker Compose</span><span>Flask</span><span>Redis</span><span>Nginx</span>
+          </div>
+          <a href="https://github.com/kingstom-glitch/devops-project-1" class="project-link" target="_blank">Voir sur GitHub →</a>
+        </div>
+        <span class="project-status status-progress">En cours</span>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <p class="project-title">Pipeline CI/CD complet</p>
+          <p class="project-desc">Automatisation du build, des tests et du déploiement via GitHub Actions. Build d'image Docker + push Docker Hub + déploiement auto sur VPS.</p>
+          <div class="project-tech">
+            <span>GitHub Actions</span><span>Docker Hub</span><span>VPS</span><span>Hetzner</span>
+          </div>
+        </div>
+        <span class="project-status status-planned">Planifié</span>
+      </div>
+
+      <div class="project-card">
+        <div>
+          <p class="project-title">Homelab Proxmox — infrastructure personnelle</p>
+          <p class="project-desc">Serveur personnel avec Proxmox VE, multiples LXC et VMs. Services auto-hébergés en production : VPN, DNS, stockage, streaming, reverse proxy.</p>
+          <div class="project-tech">
+            <span>Proxmox</span><span>Docker</span><span>WireGuard</span><span>Pi-hole</span><span>Nextcloud</span><span>Nginx</span>
+          </div>
+        </div>
+        <span class="project-status status-done">En production</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOMELAB -->
+  <section id="homelab">
+    <p class="section-label">04 — Homelab</p>
+    <h2 class="section-title">Mon labo personnel.</h2>
+    <p style="color: var(--text2); font-weight: 300; margin-bottom: 40px; max-width: 560px;">
+      Proxmox VE comme hyperviseur, avec une stack de services auto-hébergés en continu.
+      Mon terrain d'expérimentation quotidien.
+    </p>
+    <div class="homelab-grid">
+      <div class="homelab-item">
+        <div class="name">Proxmox VE</div>
+        <div class="role">Hyperviseur</div>
+      </div>
+      <div class="homelab-item">
+        <div class="name">Pi-hole</div>
+        <div class="role">DNS + DHCP</div>
+      </div>
+      <div class="homelab-item">
+        <div class="name">WireGuard</div>
+        <div class="role">VPN</div>
+      </div>
+      <div class="homelab-item">
+        <div class="name">Nginx</div>
+        <div class="role">Reverse proxy</div>
+      </div>
+      <div class="homelab-item">
+        <div class="name">Nextcloud</div>
+        <div class="role">Stockage cloud</div>
+      </div>
+      <div class="homelab-item">
+        <div class="name">Jellyfin</div>
+        <div class="role">Streaming media</div>
+      </div>
+      <div class="homelab-item">
+        <div class="name">CrowdSec</div>
+        <div class="role">Sécurité</div>
+      </div>
+      <div class="homelab-item">
+        <div class="name">Guacamole</div>
+        <div class="role">Accès distant</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSO -->
+  <section id="perso">
+    <p class="section-label">05 — En dehors du clavier</p>
+    <h2 class="section-title">Qui je suis,<br>au-delà du terminal.</h2>
+    <div class="perso-grid">
+      <div class="perso-card">
+        <h3>Hardstyle & Rawstyle</h3>
+        <p>La musique électronique comme carburant — du hardstyle au rawstyle en passant par des sonorités plus sombres type LONOWN. Une énergie qui se retrouve dans la façon d'aborder les problèmes.</p>
+      </div>
+      <div class="perso-card">
+        <h3>Vélo & Crossfit</h3>
+        <p>Le vélo en amateur pour décompresser, le crossfit en débutant pour se dépasser. Le sport comme contre-poids à des journées derrière un écran — et un bon entraînement à la persévérance.</p>
+      </div>
+      <div class="perso-card">
+        <h3>Autodidacte depuis l'enfance</h3>
+        <p>Pas de formation IT, mais des années à démonter, réinstaller, bidouiller. La curiosité comme moteur principal — si quelque chose m'intéresse, je plonge dedans jusqu'à comprendre.</p>
+      </div>
+      <div class="perso-card">
+        <h3>En cours d'apprentissage</h3>
+        <p>TryHackMe pour la cybersécurité, KodeKloud pour le DevOps, homelab pour la pratique. Je crois qu'on apprend mieux en construisant qu'en regardant des tutoriels.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Stanislav K. — Mis à jour en continu.</p>
+    <div class="footer-links">
+      <a href="https://github.com/kingstom-glitch" target="_blank">GitHub</a>
+      <a href="mailto:">Contact</a>
+    </div>
+  </footer>
+
+
+  <script>
+    function toggleTheme() {
+      const root = document.documentElement;
+      const btn = document.getElementById('toggleBtn');
+      if (root.classList.contains('light')) {
+        root.classList.remove('light');
+        btn.textContent = '☀ clair';
+      } else {
+        root.classList.add('light');
+        btn.textContent = '☾ sombre';
+      }
+    }
+  </script>
+</body>
+</html>
